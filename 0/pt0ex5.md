@@ -1,5 +1,3 @@
-Tee kaavio tilanteesta, jossa käyttäjä menee selaimella osoitteeseen https://studies.cs.helsinki.fi/exampleapp/spa eli muistiinpanojen Single Page App-versioon
-
 ```mermaid
 sequenceDiagram
     participant browser
@@ -10,14 +8,16 @@ sequenceDiagram
     server-->>browser: HTML document
     deactivate server
 
+    Note right of browser: The browser fetches HTML code for the single page app.
+    
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
     activate server
-    server-->>browser: the css file
+    server-->>browser: CSS file
     deactivate server
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
     activate server
-    server-->>browser: the JavaScript file
+    server-->>browser: JavaScript code for single page app
     deactivate server
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
