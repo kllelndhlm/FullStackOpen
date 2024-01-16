@@ -1,20 +1,11 @@
-  GNU nano 4.8                                                                                     pt0ex4.md                                                                                               
-Kaavio, joka kuvaa, mitä tapahtuu tilanteessa, jossa käyttäjä luo uuden muistiinpanon ollessaan sivulla https://studies.cs.helsinki.fi/exampleapp/notes eli kirjoittaa tekstikenttään jotain ja painaa nap>
+Tee kaavio tilanteesta, jossa käyttäjä menee selaimella osoitteeseen https://studies.cs.helsinki.fi/exampleapp/spa eli muistiinpanojen Single Page App-versioon
 
 ```mermaid
 sequenceDiagram
     participant browser
     participant server
 
-    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
-    activate server
-    server-->>browser: HTML document
-
-    deactivate server
-
-    Note right of browser: The server asks the browser for a HTTP GET request to /exampleapp/notes
-
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
     activate server
     server-->>browser: HTML document
     deactivate server
@@ -24,7 +15,7 @@ sequenceDiagram
     server-->>browser: the css file
     deactivate server
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
     activate server
     server-->>browser: the JavaScript file
     deactivate server
