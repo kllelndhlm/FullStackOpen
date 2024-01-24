@@ -7,23 +7,31 @@ const Button = ({ handleClick, text }) => (
 )
 
 const Statistics = (props) => {
-  console.log(props.stats[0])
-  return (
-    <div>
-      <h1>statistics</h1>
-      good {props.stats[0]}
-      <br/>
-      neutral {props.stats[1]}
-      <br/>
-      bad {props.stats[2]}
-      <br/>
-      all {props.stats[0] + props.stats[1] + props.stats[2]}
-      <br/>
-      average {(props.stats[0] * 1 + props.stats[2] * (-1)) / (props.stats[0] + props.stats[1] + props.stats[2])}
-      <br/>
-      positive {100 * props.stats[0] / (props.stats[0] + props.stats[1] + props.stats[2]) } %
-    </div>
+  if (props.stats[0] + props.stats[1] + props.stats[2] >= 1) {
+      return (
+        <div>
+          <h1>statistics</h1>
+          good {props.stats[0]}
+          <br/>
+          neutral {props.stats[1]}
+          <br/>
+          bad {props.stats[2]}
+          <br/>
+          all {props.stats[0] + props.stats[1] + props.stats[2]}
+          <br/>
+          average {(props.stats[0] * 1 + props.stats[2] * (-1)) / (props.stats[0] + props.stats[1] + props.stats[2])}
+          <br/>
+          positive {100 * props.stats[0] / (props.stats[0] + props.stats[1] + props.stats[2]) } %
+        </div>
+      )
+    }
+    return (
+      <div>
+        <h1>statistics</h1>
+        No feedback given
+      </div>
   )
+
 }
 
 const App = () => {
