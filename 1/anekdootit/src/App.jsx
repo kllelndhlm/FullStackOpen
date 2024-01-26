@@ -10,6 +10,10 @@ const GetRandom = (props) => {
   )
 }
 
+const MaxPoints = (props) => {
+  return (props.indexOf(Math.max(...props)))
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -23,12 +27,12 @@ const App = () => {
   ]
 
   const handlePoints = () => {
-    const newPoints = { ...anecdotePoints }
+    const newPoints = [ ...anecdotePoints ]
     {newPoints[selected] += 1}
     setPoints(newPoints)
   }
     
-  
+
 
   const [anecdotePoints, setPoints] = useState(Array(anecdotes.length).fill(0))
   const [selected, setSelected] = useState(0)
@@ -41,8 +45,8 @@ const App = () => {
       <Button handleClick={() => setSelected(GetRandom(anecdotes.length - 1))} text="next anecdote" />      
       <Button handleClick={() => handlePoints()} text="vote" />
       <h1>Anecdote with most votes</h1>
-      <p>                         </p>
-      <p>has                         votes</p>
+      <p>{anecdotes[MaxPoints(anecdotePoints)]}</p>
+      <p>has {Math.max(...anecdotePoints)} votes</p>
     </div>
   )
 }
