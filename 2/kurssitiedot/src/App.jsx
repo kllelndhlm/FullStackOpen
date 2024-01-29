@@ -49,12 +49,9 @@ const App = () => {
   return (
     <div>
       <h1>Web development curriculum</h1>
-      <ul>
         {courses.map(course =>  
-          <li key={course.id}>
-            < Course course={course} />
-          </li>)}
-      </ul>
+          <Course key={course.id} course={course} />
+        )}
     </div>
   )
 }
