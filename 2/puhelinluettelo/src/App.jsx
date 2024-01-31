@@ -1,5 +1,48 @@
 import { useState } from 'react'
 
+const Names = (props) => {
+  return (
+    <ul>
+    {props.filteredNames.map(name =>
+      <li key={name.id}>
+      {name.name} {name.number}
+    </li>
+
+    )}
+  </ul>
+  )
+}
+
+const AddForm = (props) => {
+  return (
+    <form onSubmit={props.addName}>
+      <div>name: <input
+        value={props.newName}
+        onChange={props.handleNameChange}
+        />
+      </div>
+      <div>number: <input 
+        value={props.newNumber}
+        onChange={props.handleNumberChange}
+        />
+      </div>
+      <button type="submit">add</button>
+  </form>
+  )
+}
+
+const Filter = (props) => {
+  return (
+    <form onSubmit={props.addFilter}> 
+    <div>filter shown with<input
+          value={props.newFilter}
+          onChange={props.handleFilterChange}
+          />
+        </div>
+    </form>
+  )
+}
+
 const App = () => {
   const [names, setNames] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
@@ -29,12 +72,9 @@ const App = () => {
     setNewNumber('')
   }
 
-  const namesToShow = showAll
-    ? names
-    : names.filter(name => name.name.toLowerCase().includes(newFilter.toLowerCase()) === true)
+  const filteredNames = names.filter(name => name.name.toLowerCase().includes(newFilter.toLowerCase()) === true)
 
   const handleNameChange = (event) => {
-    console.log(event.target.value)
     setNewName(event.target.value)
   }
 
@@ -54,39 +94,13 @@ const App = () => {
   return (
     <div>
     <h2>Phonebook</h2>
-    <form onSubmit={addFilter}> 
-    <div>filter shown with<input
-          value={newFilter}
-          onChange={handleFilterChange}
-          />
-        </div>
-  </form>
-      <h2>add a new</h2>
-      <form onSubmit={addName}>
-        <div>name: <input
-          value={newName}
-          onChange={handleNameChange}
-          />
-        </div>
-        <div>number: <input 
-          value={newNumber}
-          onChange={handleNumberChange}
-          />
-        </div>
-        <button type="submit">add</button>
-      </form>
-      <h2>Numbers</h2>
-      <ul>
-        {namesToShow.map(name =>
-          <li key={name.id}>
-          {name.name} {name.number}
-        </li>
-
-        )}
-      </ul>
-    </div>
+    <Filter addFilter={addFilter} newFilter={newFilter} handleFilterChange={handleFilterChange}/>
+    <h3>add a new</h3>
+    <AddForm addName={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange}/>
+    <h3>Numbers</h3>
+    <Names filteredNames={filteredNames}/>
+  </div>
   )
-
 }
 
 export default App
