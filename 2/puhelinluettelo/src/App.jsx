@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+const baseUrl = 'http://localhost:3001/persons'
+
 
 const Names = (props) => {
   return (
@@ -52,15 +54,12 @@ const App = () => {
   const [newFilter, setNewFilter] = useState('')
 
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
+    axios.get(baseUrl)
       .then(response => {
-        console.log('promise fulfilled')
         setPersons(response.data)
       })
   }, [])
-  console.log('render', persons.length, 'persons')
+  
 
   const addName = (event) => {
     event.preventDefault()
