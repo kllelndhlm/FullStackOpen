@@ -72,7 +72,12 @@ const App = () => {
       number: newNumber,
       id: persons.length + 1
     }
-  
+    axios.post(baseUrl, nameObject)
+    .then(response => {
+      setPersons(persons.concat(response.data))
+      setNewName('')
+    })
+    
     setPersons(persons.concat(nameObject))
     setNewName('')
     setNewNumber('')
