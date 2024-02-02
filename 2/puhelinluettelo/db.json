@@ -21,24 +21,19 @@
       "id": 4
     },
     {
-      "name": "Uusi Nimi",
+      "name": "Uusi Numero",
       "number": "12345",
       "id": 5
     },
     {
-      "name": "New Name",
+      "name": "New Number",
       "number": "67890",
       "id": 6
     },
     {
-      "name": "Nytt Namn",
+      "name": "Nytt Nummer",
       "number": "54321",
       "id": 7
-    },
-    {
-      "name": "Neues Namen",
-      "number": "09876",
-      "id": 8
     }
   ]
 }
