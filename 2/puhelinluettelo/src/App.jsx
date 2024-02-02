@@ -1,16 +1,16 @@
+import personService from './services/persons.js'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 const baseUrl = 'http://localhost:3001/persons'
 
-
 const Names = (props) => {
+  const filteredNames = props.persons.filter(name => name.name.toLowerCase().includes(props.newFilter.toLowerCase()) === true)
   return (
     <ul>
-    {props.filteredNames.map(name =>
+    {filteredNames.map(name =>
       <li key={name.id}>
       {name.name} {name.number}
     </li>
-
     )}
   </ul>
   )
@@ -54,9 +54,10 @@ const App = () => {
   const [newFilter, setNewFilter] = useState('')
 
   useEffect(() => {
-    axios.get(baseUrl)
-      .then(response => {
-        setPersons(response.data)
+    personService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }, [])
   
@@ -72,18 +73,17 @@ const App = () => {
       number: newNumber,
       id: persons.length + 1
     }
-    axios.post(baseUrl, nameObject)
-    .then(response => {
-      setPersons(persons.concat(response.data))
-      setNewName('')
-    })
-    
-    setPersons(persons.concat(nameObject))
-    setNewName('')
-    setNewNumber('')
-  }
 
-  const filteredNames = persons.filter(name => name.name.toLowerCase().includes(newFilter.toLowerCase()) === true)
+    personService
+      .create(nameObject)
+        .then(response => {
+        setPersons(persons.concat(response))
+        setNewName('')
+        setNewNumber('')
+      })
+  }
+  console.log({persons})
+
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -109,7 +109,7 @@ const App = () => {
     <h3>add a new</h3>
     <AddForm addName={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange}/>
     <h3>Numbers</h3>
-    <Names filteredNames={filteredNames}/>
+    <Names persons={persons} newFilter={newFilter}/>
   </div>
   )
 }
