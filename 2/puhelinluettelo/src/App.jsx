@@ -1,5 +1,18 @@
 import personService from './services/persons.js'
+import './index.css'
 import { useState, useEffect } from 'react'
+
+const Notification = ({message}) => {
+  <Notification message={message} />
+  if (message === null) {
+    return null
+  }
+  return (
+    <div className="notification">
+      {message}
+    </div>
+  )
+}
 
 const Names = ({ person, removeNumber }) => {
   return (
@@ -44,6 +57,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
+  const [notificationMessage, setNotificationMessage] = useState(null)
 
   useEffect(() => {
     personService
@@ -73,8 +87,8 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault()
-    const changeNumber = filteredPersons.find(name => name.name === newName)
-    const changeNumberId = changeNumber.id
+//    const changeNumber = filteredPersons.find(name => name.name === newName)
+//    const changeNumberId = changeNumber.id
 
   
     if (
@@ -89,13 +103,13 @@ const App = () => {
           const newNameObject = {
             name: newName,
             number: newNumber,
-            id: changeNumberId
+            id: filteredPersons.find(name => name.name === newName).id
           }
 
           personService
-          .replace(changeNumberId, newNameObject)
+          .replace(filteredPersons.find(name => name.name === newName).id, newNameObject)
           .then(response => {
-            setPersons(persons.map(name => name.id !== changeNumberId ? name : response))
+            setPersons(persons.map(name => name.id !== filteredPersons.find(name => name.name === newName).id ? name : response))
             setNewName('')
             setNewNumber('')          
           })
@@ -111,8 +125,16 @@ const App = () => {
       .create(nameObject)
         .then(response => {
         setPersons(persons.concat(response))
+        console.log(newName)
+        setNotificationMessage(
+          `Added '${newName}'`
+        )
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
         setNewName('')
         setNewNumber('')
+
       })
     }
   }
@@ -136,6 +158,7 @@ const App = () => {
   return (
     <div>
     <h2>Phonebook</h2>
+    <Notification message={notificationMessage} />
     <Filter handleFilterChange={handleFilterChange}/>
     <h3>add a new</h3>
     <AddForm addName={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange}/>
