@@ -73,10 +73,34 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault()
-    if (persons.map(name => name.name).includes(newName)) 
-      return (
-        alert(`${newName} is already added to phonebook`)
+    const changeNumber = filteredPersons.find(name => name.name === newName)
+    const changeNumberId = changeNumber.id
+
+  
+    if (
+      persons.map(name => name.name).includes(newName)
       )
+//      persons[changeId] = newName;
+
+    //    !etsi id persons-arraysta
+      if (
+        window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+        ) {
+          const newNameObject = {
+            name: newName,
+            number: newNumber,
+            id: changeNumberId
+          }
+
+          personService
+          .replace(changeNumberId, newNameObject)
+          .then(response => {
+            setPersons(persons.map(name => name.id !== changeNumberId ? name : response))
+            setNewName('')
+            setNewNumber('')          
+          })
+        }
+    {      
     const nameObject = {
       name: newName,
       number: newNumber,
@@ -90,6 +114,7 @@ const App = () => {
         setNewName('')
         setNewNumber('')
       })
+    }
   }
 
   const handleNameChange = (event) => {
@@ -120,6 +145,6 @@ const App = () => {
       <Names key={name.id} person={name} removeNumber={() => removeById(name.id)} />)}
     </div>
   )
-
+    
 }
 export default App

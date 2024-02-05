@@ -22,7 +22,7 @@
     },
     {
       "name": "Uusi Numero",
-      "number": "12345",
+      "number": "3",
       "id": 5
     },
     {
@@ -31,9 +31,24 @@
       "id": 6
     },
     {
-      "name": "Nytt Nummer",
-      "number": "54321",
+      "name": "Uusi Numero",
+      "number": "1",
       "id": 7
+    },
+    {
+      "name": "Uusi Numero",
+      "number": "3",
+      "id": 8
+    },
+    {
+      "name": "New Number",
+      "number": "4",
+      "id": 9
+    },
+    {
+      "name": "Uusi Numero",
+      "number": "6",
+      "id": 10
     }
   ]
 }
