@@ -8,7 +8,7 @@ const Notification = ({message}) => {
     return null
   }
   return (
-    <div className="notification">
+      <div className="notification">
       {message}
     </div>
   )
@@ -71,32 +71,22 @@ const App = () => {
     const toBeRemoved = filteredPersons.find(name => name.id === id)
     const deleteThis = { ...toBeRemoved}
     
-    if (window.confirm(`Delete ${deleteThis.name}?`)) {
+    if (window.confirm(`Delete ${deleteThis.name}?`)) 
       personService
         .remove(id)
-        }
-    personService
-      .getAll()
-      .then(initialPersons => {
-        setPersons(initialPersons)
-        setNewName('')
-        setNewNumber('')
-      }
-    )
-  }
+        .then(personService
+          .getAll()
+            .then(response => {
+            setPersons(response)
+            })
+          )
+  } 
 
   const addName = (event) => {
     event.preventDefault()
-//    const changeNumber = filteredPersons.find(name => name.name === newName)
-//    const changeNumberId = changeNumber.id
-
-  
     if (
       persons.map(name => name.name).includes(newName)
       )
-//      persons[changeId] = newName;
-
-    //    !etsi id persons-arraysta
       if (
         window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
         ) {
@@ -125,7 +115,6 @@ const App = () => {
       .create(nameObject)
         .then(response => {
         setPersons(persons.concat(response))
-        console.log(newName)
         setNotificationMessage(
           `Added '${newName}'`
         )
@@ -158,7 +147,7 @@ const App = () => {
   return (
     <div>
     <h2>Phonebook</h2>
-    <Notification message={notificationMessage} />
+    <Notification message={notificationMessage}/>
     <Filter handleFilterChange={handleFilterChange}/>
     <h3>add a new</h3>
     <AddForm addName={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange}/>
