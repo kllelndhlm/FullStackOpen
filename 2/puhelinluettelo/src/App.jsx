@@ -140,6 +140,7 @@ const App = () => {
     setNewFilter(event.target.value)
   }
   const filteredPersons = newFilter
+    console.log(persons.map(name =><Names key={name.id} person={name} removeNumber={() => removeById(name.id)} />))
     ? persons.filter(name => name.name.toLowerCase().includes(newFilter.toLowerCase()) === true)
     : persons
 
