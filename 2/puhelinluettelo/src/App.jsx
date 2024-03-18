@@ -1,6 +1,6 @@
+import { useState, useEffect } from 'react'
 import personService from './services/persons.js'
 import './index.css'
-import { useState, useEffect } from 'react'
 
 const Notification = ({message}) => {
   <Notification message={message} />
@@ -84,6 +84,31 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault()
+    if (!
+      persons.map(name => name.name).includes(newName)
+      )
+      {      
+        const nameObject = {
+          name: newName,
+          number: newNumber,
+          id: persons.length + 1
+        }
+    
+        personService
+          .create(nameObject)
+            .then(response => {
+            setPersons(persons.concat(response))
+            setNotificationMessage(
+              `Added'${newName}'`
+            )
+            setTimeout(() => {
+              setNotificationMessage(null)
+            }, 5000)
+            setNewName('')
+            setNewNumber('')
+    
+          })
+        }
     if (
       persons.map(name => name.name).includes(newName)
       )
@@ -94,38 +119,18 @@ const App = () => {
             name: newName,
             number: newNumber,
             id: filteredPersons.find(name => name.name === newName).id
-          }
+          }          
 
           personService
-          .replace(filteredPersons.find(name => name.name === newName).id, newNameObject)
-          .then(response => {
-            setPersons(persons.map(name => name.id !== filteredPersons.find(name => name.name === newName).id ? name : response))
-            setNewName('')
-            setNewNumber('')          
-          })
+            .replace(filteredPersons.find(name => name.name === newName).id, newNameObject)
+            .then(response => {
+              setPersons(persons.map(name => name.id !== filteredPersons.find(name => name.name === newName).id ? name : response))
+              setNewName('')
+              setNewNumber('')          
+            }
+          )
         }
-    {      
-    const nameObject = {
-      name: newName,
-      number: newNumber,
-      id: persons.length + 1
-    }
 
-    personService
-      .create(nameObject)
-        .then(response => {
-        setPersons(persons.concat(response))
-        setNotificationMessage(
-          `Added '${newName}'`
-        )
-        setTimeout(() => {
-          setNotificationMessage(null)
-        }, 5000)
-        setNewName('')
-        setNewNumber('')
-
-      })
-    }
   }
 
   const handleNameChange = (event) => {
@@ -140,10 +145,8 @@ const App = () => {
     setNewFilter(event.target.value)
   }
   const filteredPersons = newFilter
-    console.log(persons.map(name =><Names key={name.id} person={name} removeNumber={() => removeById(name.id)} />))
     ? persons.filter(name => name.name.toLowerCase().includes(newFilter.toLowerCase()) === true)
     : persons
-
 
   return (
     <div>
